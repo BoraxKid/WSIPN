@@ -1,0 +1,11 @@
+wsipn_games_viewer:
+    resource: "@WSIPNGamesViewerBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+_welcome:
+    pattern:  /
+    defaults: { _controller: AppBundle:Default:index }

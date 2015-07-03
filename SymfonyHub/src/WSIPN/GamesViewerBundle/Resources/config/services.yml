@@ -1,0 +1,13 @@
+parameters:
+    steam_api_key: 0F9618566815939B7D9C81AA35953BAC
+
+services:
+    wsipn_games_viewer.steam_utility:
+        class: WSIPN\GamesViewerBundle\SteamUtility\WSIPNSteamUtility
+    wsipn_games_viewer.game_sorter:
+        class: WSIPN\GamesViewerBundle\GameSorter\WSIPNGameSorter
+    wsipn_games_viewer.game_list_utility:
+        class: WSIPN\GamesViewerBundle\GameListUtility\WSIPNGameListUtility
+#    wsipn_games_viewer.example:
+#        class: WSIPN\GamesViewerBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

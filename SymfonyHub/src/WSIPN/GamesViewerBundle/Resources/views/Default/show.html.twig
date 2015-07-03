@@ -1,0 +1,57 @@
+{% extends "WSIPNGamesViewerBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Show{% endblock %}
+
+{% block container%}
+	<div class="starter-template">
+		<h1>{{ title }}</h1>
+		{% if steam_id64 == '' %}
+		<p class="lead">Here you could see your Steam games if you were connected.</p>
+	</div>
+		{% else %}
+		<p class="lead">Here you can see your Steam games sorted by ascending game time.<br>You can sort your games by names or time played by clicking on the categories. Enjoy!</p>
+		{% if last_update != 0 %}
+		<p>Your game library was last updated on {{ last_update|date("F jS \\a\\t H:i", "Europe/Paris") }}, if you want to update it now click <a href="{{ path('wsipn_show', {'sort': sort, 'force_update': '1'}) }}">here</a>.</p>
+		{% endif %}
+	</div>
+	<div class="page-header">
+		<h1>My games</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table">
+				<thead>
+					<tr>
+						{% if sort == 'asc_appid' %}
+						<th><a href="{{ path('wsipn_show', {'sort': 'desc_appid'}) }}">App id</a></th>
+						{% else %}
+						<th><a href="{{ path('wsipn_show', {'sort': 'asc_appid'}) }}">App id</a></th>
+						{% endif %}
+						<th></th>
+						{% if sort == 'asc_name' %}
+						<th><a href="{{ path('wsipn_show', {'sort': 'desc_name'}) }}">Game</a></th>
+						{% else %}
+						<th><a href="{{ path('wsipn_show', {'sort': 'asc_name'}) }}">Game</a></th>
+						{% endif %}
+						{% if sort == 'asc_playtime' %}
+						<th><a href="{{ path('wsipn_show', {'sort': 'desc_playtime'}) }}">Hours played</a></th>
+						{% else %}
+						<th><a href="{{ path('wsipn_show', {'sort': 'asc_playtime'}) }}">Hours played</a></th>
+						{% endif %}
+					</tr>
+				</thead>
+				<tbody>
+					{% for game in game_list %}
+						<tr>
+							<th>{{ game.appid }}</th>
+							<th><img src="{{ 'http://media.steampowered.com/steamcommunity/public/images/apps/' ~ game.appid ~ '/' ~ game.img_logo_url ~ '.jpg'}}" alt="{{game.name}}" title="{{game.name}}"></th>
+							<th>{{ game.name }}</th>
+							<th>{{ (game.playtime_forever / 60)|round(1, 'floor')}}</th>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{% endif %}
+{% endblock %}

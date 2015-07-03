@@ -1,0 +1,33 @@
+{% extends "WSIPNGamesViewerBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Index{% endblock %}
+
+{% block container%}
+	<div class="starter-template">
+		<h1>{{ title }}</h1>
+		<p class="lead">Welcome to <i>{{ title }}</i>.</p>
+		{% if steam_id64 == ''%}
+		<p class="lead">Please sign in to your Steam account to access your game library.</p>
+		{% else %}
+		<p class="lead">You can go to the games viewer page to see you Steam game library.</p>
+		<div class="well">
+			{% if not_played <= 0 %}
+			<p></p>
+			{% else %}
+			<div class="progress">
+				<div class="progress-bar progress-bar-danger" role="progressbar" style="width: {{ not_played / game_count * 100 }}%" title="{{ not_played / game_count * 100 }}% Games not played"><span class="sr-only">{{ not_played / game_count * 100 }}% Games not played</span></div>
+				<div class="progress-bar progress-bar-info" role="progressbar" style="width: {{ one_played / game_count * 100 }}%" title="{{ one_played / game_count * 100 }}% Games played less than 1 hour"><span class="sr-only">{{ one_played / game_count * 100 }}% Games played less than 1 hour</span></div>
+				<div class="progress-bar progress-bar-success" role="progressbar" style="width: {{ (game_count - (not_played + one_played)) / game_count * 100 }}%" title="{{ (game_count - (not_played + one_played)) / game_count * 100 }}% Games played more than 1 hour"><span class="sr-only">{{ (game_count - (not_played + one_played)) / game_count * 100 }}% Games played more than 1 hour</span></div>
+			</div>
+			<p><i>Hover over a bar to see the percentage.</i><br>This bar shows you a repartition of your game time. The red bar represents the games you never played in your game library. The blue bar represents the games you tested for less than one hour. The green bar represents the games you played more than one hour.</p>
+			{% endif %}
+		</div>
+		<p>Here is three games from your none played ones, give it a try!</p>
+		<div class="container">
+			{% for game in three_games %}
+				<a href="steam://rungameid/{{ game.appid }}/"><img src="{{ 'http://media.steampowered.com/steamcommunity/public/images/apps/' ~ game.appid ~ '/' ~ game.img_logo_url ~ '.jpg'}}" alt="{{game.name}}" title="Click to play {{game.name}}" style="width: 32.9%"></a>
+			{% endfor %}
+		</div>
+		{% endif %}
+	</div>
+{% endblock %}

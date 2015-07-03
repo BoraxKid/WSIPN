@@ -1,0 +1,7 @@
+wsipn_home:
+    path:     /
+    defaults: { _controller: WSIPNGamesViewerBundle:Default:index }
+
+wsipn_show:
+    path:     /show/{sort}
+    defaults: { _controller: WSIPNGamesViewerBundle:Default:show, sort: asc_playtime }
